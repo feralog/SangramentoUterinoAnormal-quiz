@@ -2,80 +2,109 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiz — Sangramento Uterino Anormal</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.container{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.10);max-width:720px;width:100%;padding:40px 36px}
-h1{color:#1a3a5c;font-size:22px;margin-bottom:6px}
-.subtitle{color:#64748b;font-size:13px;margin-bottom:30px}
-#start-screen{text-align:center}
-#start-screen h1{font-size:26px;margin-bottom:10px}
-.btn-start{background:#1a3a5c;color:#fff;border:none;padding:14px 40px;border-radius:10px;font-size:16px;cursor:pointer;margin-top:20px;transition:background .2s}
-.btn-start:hover{background:#2c5282}
-.progress-wrap{background:#e2e8f0;border-radius:99px;height:8px;margin-bottom:24px}
-.progress-bar{background:#2563eb;height:8px;border-radius:99px;transition:width .3s}
-.progress-label{font-size:12px;color:#64748b;margin-bottom:8px}
-.question-text{font-size:15px;font-weight:600;color:#1e293b;line-height:1.6;margin-bottom:20px}
-.options{display:flex;flex-direction:column;gap:10px}
-.opt-btn{background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-align:left;font-size:14px;cursor:pointer;transition:all .15s;color:#1e293b;line-height:1.5}
-.opt-btn:hover:not(:disabled){background:#eff6ff;border-color:#93c5fd}
-.opt-btn.correct{background:#f0fdf4;border-color:#16a34a;color:#15803d;font-weight:600}
-.opt-btn.wrong{background:#fef2f2;border-color:#dc2626;color:#b91c1c}
-.opt-btn:disabled{cursor:default}
-.explanation{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:12px 14px;margin-top:16px;font-size:13px;color:#78350f;line-height:1.6;display:none}
-.nav{margin-top:24px;display:flex;justify-content:flex-end}
-.btn-next{background:#2563eb;color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:14px;cursor:pointer;display:none;transition:background .2s}
-.btn-next:hover{background:#1d4ed8}
-#result-screen{text-align:center;display:none}
-.score-circle{width:120px;height:120px;border-radius:50%;background:#eff6ff;border:6px solid #2563eb;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px}
-.score-pct{font-size:28px;font-weight:700;color:#1a3a5c}
-.score-label{font-size:11px;color:#64748b}
-.stats{display:flex;gap:20px;justify-content:center;margin-bottom:24px}
-.stat{background:#f8fafc;border-radius:10px;padding:14px 24px}
-.stat-n{font-size:22px;font-weight:700}
-.stat-n.green{color:#16a34a}.stat-n.red{color:#dc2626}
-.stat-lbl{font-size:12px;color:#64748b}
-.btn-restart{background:#1a3a5c;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-size:15px;cursor:pointer;transition:background .2s}
-.btn-restart:hover{background:#2c5282}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #1a1a1a; min-height: 100vh; }
+
+  header { background: #1e3a5f; color: white; padding: 20px 30px; text-align: center; }
+  header h1 { font-size: 22px; margin-bottom: 4px; }
+  header p { font-size: 13px; opacity: 0.8; }
+
+  .quiz-container { max-width: 800px; margin: 30px auto; padding: 0 16px 60px; }
+
+  #startScreen { background: white; border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  #startScreen h2 { font-size: 20px; color: #1e3a5f; margin-bottom: 12px; }
+  #startScreen p { font-size: 14px; color: #555; margin-bottom: 24px; line-height: 1.6; }
+
+  .progress-bar-bg { background: #dde3ea; border-radius: 8px; height: 8px; margin-bottom: 8px; }
+  .progress-bar-fill { background: #2563eb; height: 8px; border-radius: 8px; transition: width 0.4s ease; }
+  .progress-label { font-size: 12px; color: #666; margin-bottom: 20px; }
+
+  .question-card { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .question-number { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #2563eb; letter-spacing: 1px; margin-bottom: 10px; }
+  .question-text { font-size: 15px; line-height: 1.65; color: #1a1a1a; margin-bottom: 22px; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn { background: #f7f9fc; border: 2px solid #dde3ea; border-radius: 8px; padding: 12px 16px; text-align: left; font-size: 14px; cursor: pointer; transition: background 0.15s, border-color 0.15s; line-height: 1.5; }
+  .option-btn:hover:not(:disabled) { background: #e8f0fe; border-color: #2563eb; }
+  .option-btn.correct { background: #d1fae5; border-color: #16a34a; color: #166534; }
+  .option-btn.wrong { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+  .option-btn:disabled { cursor: default; }
+
+  .explanation { display: none; background: #f0fdf4; border-left: 4px solid #16a34a; border-radius: 0 8px 8px 0; padding: 14px 16px; margin-top: 14px; font-size: 13px; line-height: 1.6; color: #166534; }
+  .explanation.show { display: block; }
+
+  .btn-next { display: none; margin-top: 18px; background: #2563eb; color: white; border: none; border-radius: 8px; padding: 12px 28px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+  .btn-next:hover { background: #1d4ed8; }
+  .btn-next.show { display: inline-block; }
+
+  .btn-primary { background: #2563eb; color: white; border: none; border-radius: 8px; padding: 14px 36px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+  .btn-primary:hover { background: #1d4ed8; }
+
+  #resultScreen { display: none; background: white; border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .score-circle { width: 120px; height: 120px; border-radius: 50%; background: #1e3a5f; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 20px; }
+  .score-circle .score-num { font-size: 32px; font-weight: 700; }
+  .score-circle .score-denom { font-size: 13px; opacity: 0.8; }
+  #resultScreen h2 { font-size: 20px; color: #1e3a5f; margin-bottom: 10px; }
+  #resultScreen p { font-size: 14px; color: #555; margin-bottom: 24px; }
+
+  .stats-row { display: flex; justify-content: center; gap: 24px; margin-bottom: 28px; flex-wrap: wrap; }
+  .stat-box { background: #f7f9fc; border-radius: 8px; padding: 12px 20px; text-align: center; min-width: 90px; }
+  .stat-box .stat-val { font-size: 22px; font-weight: 700; }
+  .stat-box .stat-lbl { font-size: 11px; color: #888; margin-top: 2px; }
+  .stat-box.green .stat-val { color: #16a34a; }
+  .stat-box.red .stat-val { color: #dc2626; }
+  .stat-box.blue .stat-val { color: #2563eb; }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <div id="start-screen">
-    <div style="font-size:36px;margin-bottom:12px">🩸</div>
-    <h1>Sangramento Uterino Anormal</h1>
-    <p class="subtitle">Saúde da Mulher — Ginecologia</p>
-    <p style="color:#475569;font-size:14px;margin-top:10px">20 questões de múltipla escolha com gabarito comentado</p>
-    <button class="btn-start" onclick="startQuiz()">Começar</button>
+<header>
+  <h1>Sangramento Uterino Anormal</h1>
+  <p>Ginecologia — Saúde da Mulher</p>
+</header>
+
+<div class="quiz-container">
+
+  <div id="startScreen">
+    <h2>Quiz de Revisão</h2>
+    <p>20 questões cobrindo classificação PALM-COEIN, padrões de sangramento, eco endometrial, biópsia e tratamento clínico e cirúrgico.<br><br>Responda cada questão e veja a explicação antes de avançar.</p>
+    <button class="btn-primary" onclick="startQuiz()">Começar Quiz</button>
   </div>
 
-  <div id="quiz-screen" style="display:none">
-    <div class="progress-label" id="progress-label"></div>
-    <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
-    <div class="question-text" id="question-text"></div>
-    <div class="options" id="options"></div>
-    <div class="explanation" id="explanation"></div>
-    <div class="nav"><button class="btn-next" id="btn-next" onclick="nextQuestion()">Proxima →</button></div>
+  <div id="quizArea" style="display:none;">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">Questão 0 de 20</div>
+    <div class="question-card" id="questionCard">
+      <div class="question-number" id="questionNumber"></div>
+      <div class="question-text" id="questionText"></div>
+      <div class="options" id="optionsContainer"></div>
+      <div class="explanation" id="explanation"></div>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Próxima questão →</button>
+    </div>
   </div>
 
-  <div id="result-screen">
-    <h1 style="margin-bottom:6px">Resultado</h1>
-    <p class="subtitle" style="margin-bottom:24px">Sangramento Uterino Anormal</p>
+  <div id="resultScreen">
     <div class="score-circle">
-      <span class="score-pct" id="score-pct"></span>
-      <span class="score-label">acertos</span>
+      <span class="score-num" id="scoreFinal">0</span>
+      <span class="score-denom" id="scoreDenom">de 20</span>
     </div>
-    <div class="stats">
-      <div class="stat"><div class="stat-n green" id="stat-correct"></div><div class="stat-lbl">Acertos</div></div>
-      <div class="stat"><div class="stat-n red" id="stat-wrong"></div><div class="stat-lbl">Erros</div></div>
-      <div class="stat"><div class="stat-n" id="stat-total"></div><div class="stat-lbl">Total</div></div>
+    <h2 id="resultTitle"></h2>
+    <p id="resultMsg"></p>
+    <div class="stats-row">
+      <div class="stat-box green"><div class="stat-val" id="statCorrect">0</div><div class="stat-lbl">Acertos</div></div>
+      <div class="stat-box red"><div class="stat-val" id="statWrong">0</div><div class="stat-lbl">Erros</div></div>
+      <div class="stat-box blue"><div class="stat-val" id="statPct">0%</div><div class="stat-lbl">Aproveitamento</div></div>
     </div>
-    <button class="btn-restart" onclick="restartQuiz()">Refazer quiz</button>
+    <button class="btn-primary" onclick="restartQuiz()">Refazer Quiz</button>
   </div>
 
 </div>
+
 <script>
 const rawQuestions = [
   {
@@ -332,54 +361,59 @@ function shuffleQuestion(q) {
 
 let questions = [];
 let current = 0;
-let correct = 0;
-let wrong = 0;
+let score = 0;
 
 function startQuiz() {
   questions = rawQuestions.map(shuffleQuestion).sort(() => Math.random() - 0.5);
-  current = 0; correct = 0; wrong = 0;
-  document.getElementById('start-screen').style.display = 'none';
-  document.getElementById('quiz-screen').style.display = 'block';
+  current = 0;
+  score = 0;
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
   showQuestion();
 }
 
 function showQuestion() {
   const q = questions[current];
   const total = questions.length;
-  document.getElementById('progress-label').textContent = `Questão ${current + 1} de ${total}`;
-  document.getElementById('progress-bar').style.width = `${((current) / total) * 100}%`;
-  document.getElementById('question-text').textContent = q.question;
-  document.getElementById('explanation').style.display = 'none';
-  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('progressBar').style.width = ((current / total) * 100) + '%';
+  document.getElementById('progressLabel').textContent = `Questão ${current + 1} de ${total}`;
+  document.getElementById('questionNumber').textContent = `Questão ${current + 1}`;
+  document.getElementById('questionText').textContent = q.question;
 
-  const optDiv = document.getElementById('options');
-  optDiv.innerHTML = '';
-  q.options.forEach((opt, i) => {
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  q.options.forEach((opt, idx) => {
     const btn = document.createElement('button');
-    btn.className = 'opt-btn';
+    btn.className = 'option-btn';
     btn.textContent = opt;
-    btn.onclick = () => selectAnswer(i);
-    optDiv.appendChild(btn);
+    btn.onclick = () => selectAnswer(idx);
+    container.appendChild(btn);
   });
+
+  document.getElementById('explanation').className = 'explanation';
+  document.getElementById('explanation').textContent = '';
+  document.getElementById('btnNext').className = 'btn-next';
 }
 
-function selectAnswer(selected) {
+function selectAnswer(idx) {
   const q = questions[current];
-  const btns = document.querySelectorAll('.opt-btn');
+  const btns = document.querySelectorAll('.option-btn');
   btns.forEach(b => b.disabled = true);
-  if (selected === q.correctIndex) {
-    btns[selected].classList.add('correct');
-    correct++;
+
+  if (idx === q.correctIndex) {
+    btns[idx].classList.add('correct');
+    score++;
   } else {
-    btns[selected].classList.add('wrong');
+    btns[idx].classList.add('wrong');
     btns[q.correctIndex].classList.add('correct');
-    wrong++;
   }
+
   const exp = document.getElementById('explanation');
   exp.textContent = q.explanation;
-  exp.style.display = 'block';
-  document.getElementById('btn-next').style.display = 'inline-block';
-  document.getElementById('btn-next').textContent = current + 1 < questions.length ? 'Proxima →' : 'Ver resultado';
+  exp.className = 'explanation show';
+  document.getElementById('btnNext').className = 'btn-next show';
+  document.getElementById('btnNext').textContent = current + 1 < questions.length ? 'Próxima questão →' : 'Ver resultado';
 }
 
 function nextQuestion() {
@@ -392,19 +426,28 @@ function nextQuestion() {
 }
 
 function showResult() {
-  document.getElementById('quiz-screen').style.display = 'none';
-  const res = document.getElementById('result-screen');
-  res.style.display = 'block';
-  const pct = Math.round((correct / questions.length) * 100);
-  document.getElementById('score-pct').textContent = pct + '%';
-  document.getElementById('stat-correct').textContent = correct;
-  document.getElementById('stat-wrong').textContent = wrong;
-  document.getElementById('stat-total').textContent = questions.length;
+  document.getElementById('quizArea').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.style.display = 'block';
+  const total = questions.length;
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('scoreFinal').textContent = score;
+  document.getElementById('scoreDenom').textContent = `de ${total}`;
+  document.getElementById('statCorrect').textContent = score;
+  document.getElementById('statWrong').textContent = total - score;
+  document.getElementById('statPct').textContent = pct + '%';
+
+  let title, msg;
+  if (pct >= 80) { title = 'Excelente!'; msg = 'Ótimo domínio do conteúdo de Sangramento Uterino Anormal. Continue assim!'; }
+  else if (pct >= 60) { title = 'Bom resultado!'; msg = 'Você está no caminho certo. Revise os pontos errados no relatório.'; }
+  else { title = 'Continue estudando!'; msg = 'Revise o relatório de Sangramento Uterino Anormal com atenção antes de refazer o quiz.'; }
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
 }
 
 function restartQuiz() {
-  document.getElementById('result-screen').style.display = 'none';
-  document.getElementById('start-screen').style.display = 'block';
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('startScreen').style.display = 'block';
 }
 </script>
 </body>
