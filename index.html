@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Quiz — Sangramento Uterino Anormal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.container{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.10);max-width:720px;width:100%;padding:40px 36px}
+h1{color:#1a3a5c;font-size:22px;margin-bottom:6px}
+.subtitle{color:#64748b;font-size:13px;margin-bottom:30px}
+#start-screen{text-align:center}
+#start-screen h1{font-size:26px;margin-bottom:10px}
+.btn-start{background:#1a3a5c;color:#fff;border:none;padding:14px 40px;border-radius:10px;font-size:16px;cursor:pointer;margin-top:20px;transition:background .2s}
+.btn-start:hover{background:#2c5282}
+.progress-wrap{background:#e2e8f0;border-radius:99px;height:8px;margin-bottom:24px}
+.progress-bar{background:#2563eb;height:8px;border-radius:99px;transition:width .3s}
+.progress-label{font-size:12px;color:#64748b;margin-bottom:8px}
+.question-text{font-size:15px;font-weight:600;color:#1e293b;line-height:1.6;margin-bottom:20px}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt-btn{background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-align:left;font-size:14px;cursor:pointer;transition:all .15s;color:#1e293b;line-height:1.5}
+.opt-btn:hover:not(:disabled){background:#eff6ff;border-color:#93c5fd}
+.opt-btn.correct{background:#f0fdf4;border-color:#16a34a;color:#15803d;font-weight:600}
+.opt-btn.wrong{background:#fef2f2;border-color:#dc2626;color:#b91c1c}
+.opt-btn:disabled{cursor:default}
+.explanation{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:12px 14px;margin-top:16px;font-size:13px;color:#78350f;line-height:1.6;display:none}
+.nav{margin-top:24px;display:flex;justify-content:flex-end}
+.btn-next{background:#2563eb;color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:14px;cursor:pointer;display:none;transition:background .2s}
+.btn-next:hover{background:#1d4ed8}
+#result-screen{text-align:center;display:none}
+.score-circle{width:120px;height:120px;border-radius:50%;background:#eff6ff;border:6px solid #2563eb;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px}
+.score-pct{font-size:28px;font-weight:700;color:#1a3a5c}
+.score-label{font-size:11px;color:#64748b}
+.stats{display:flex;gap:20px;justify-content:center;margin-bottom:24px}
+.stat{background:#f8fafc;border-radius:10px;padding:14px 24px}
+.stat-n{font-size:22px;font-weight:700}
+.stat-n.green{color:#16a34a}.stat-n.red{color:#dc2626}
+.stat-lbl{font-size:12px;color:#64748b}
+.btn-restart{background:#1a3a5c;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-size:15px;cursor:pointer;transition:background .2s}
+.btn-restart:hover{background:#2c5282}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div id="start-screen">
+    <div style="font-size:36px;margin-bottom:12px">🩸</div>
+    <h1>Sangramento Uterino Anormal</h1>
+    <p class="subtitle">Saúde da Mulher — Ginecologia</p>
+    <p style="color:#475569;font-size:14px;margin-top:10px">20 questões de múltipla escolha com gabarito comentado</p>
+    <button class="btn-start" onclick="startQuiz()">Começar</button>
+  </div>
+
+  <div id="quiz-screen" style="display:none">
+    <div class="progress-label" id="progress-label"></div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+    <div class="nav"><button class="btn-next" id="btn-next" onclick="nextQuestion()">Proxima →</button></div>
+  </div>
+
+  <div id="result-screen">
+    <h1 style="margin-bottom:6px">Resultado</h1>
+    <p class="subtitle" style="margin-bottom:24px">Sangramento Uterino Anormal</p>
+    <div class="score-circle">
+      <span class="score-pct" id="score-pct"></span>
+      <span class="score-label">acertos</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n green" id="stat-correct"></div><div class="stat-lbl">Acertos</div></div>
+      <div class="stat"><div class="stat-n red" id="stat-wrong"></div><div class="stat-lbl">Erros</div></div>
+      <div class="stat"><div class="stat-n" id="stat-total"></div><div class="stat-lbl">Total</div></div>
+    </div>
+    <button class="btn-restart" onclick="restartQuiz()">Refazer quiz</button>
+  </div>
+
+</div>
+<script>
+const rawQuestions = [
+  {
+    question: "Qual é a causa mais comum de sangramento uterino no menacme e deve ser sempre excluída primeiro?",
+    options: [
+      "Gestação",
+      "Mioma uterino submucoso",
+      "Pólipo endometrial",
+      "Disfunção ovulatória por SOP",
+      "Coagulopatia por doença de von Willebrand"
+    ],
+    correctIndex: 0,
+    explanation: "A causa mais comum de sangramento uterino no menacme é a gestação. O beta-HCG deve ser a primeira solicitação antes de investigar outras causas de SUA."
+  },
+  {
+    question: "Quais são os parâmetros do ciclo menstrual normal?",
+    options: [
+      "Duração 3–8 dias, volume 5–80 mL, ciclo 24–38 dias",
+      "Duração 2–10 dias, volume 10–120 mL, ciclo 21–35 dias",
+      "Duração 1–5 dias, volume 30–100 mL, ciclo 28–30 dias",
+      "Duração 3–5 dias, volume 5–50 mL, ciclo 25–32 dias",
+      "Duração 4–7 dias, volume 20–60 mL, ciclo 26–35 dias"
+    ],
+    correctIndex: 0,
+    explanation: "O ciclo menstrual normal tem: duração do fluxo de 3 a 8 dias, perda sanguínea de 5 a 80 mL por ciclo, e intervalo entre ciclos de 24 a 38 dias (variabilidade de ±3 dias)."
+  },
+  {
+    question: "A classificação PALM-COEIN da FIGO divide o SUA em causas estruturais (PALM) e não estruturais (COEIN). Qual item pertence ao grupo PALM?",
+    options: [
+      "Adenomiose",
+      "Disfunção ovulatória",
+      "Coagulopatia",
+      "Iatrogênica",
+      "Desordem endometrial"
+    ],
+    correctIndex: 0,
+    explanation: "PALM corresponde às causas estruturais: Pólipo, Adenomiose, Leiomioma e Malignidade/hiperplasia. COEIN representa as causas não estruturais: Coagulopatia, disfunção Ovulatória, desordem Endometrial, Iatrogênica e Não classificada."
+  },
+  {
+    question: "Qual a diferença entre SUA crônico e SUA agudo segundo a classificação FIGO?",
+    options: [
+      "Crônico: > 6 meses sem necessidade de intervenção imediata; Agudo: episódio intenso com necessidade de intervenção imediata",
+      "Crônico: associado a causas estruturais; Agudo: associado a causas não estruturais",
+      "Crônico: sangramento cíclico regular; Agudo: sangramento irregular e imprevisível",
+      "Crônico: tratado apenas clinicamente; Agudo: requer sempre cirurgia de urgência",
+      "Crônico: ocorre exclusivamente no menacme; Agudo: ocorre na pós-menopausa"
+    ],
+    correctIndex: 0,
+    explanation: "SUA Crônico: evolução > 6 meses, sem necessidade de intervenção imediata. SUA Agudo: episódio de sangramento intenso que necessita de intervenção imediata para evitar instabilidade hemodinâmica."
+  },
+  {
+    question: "Uma paciente de 52 anos, pós-menopausa há 3 anos, sem uso de terapia hormonal, apresenta episódio de sangramento vaginal. O eco endometrial ao USG TV é de 6 mm. Qual é a conduta?",
+    options: [
+      "Indicar histeroscopia com biópsia endometrial, pois o EE ultrapassa o limite de 5 mm na pós-menopausa sem TRH",
+      "Tranquilizar a paciente, pois EE de 6 mm é normal em qualquer fase da vida",
+      "Apenas repetir a USG em 3 meses para acompanhar",
+      "Iniciar terapia hormonal e reavaliar em 6 meses",
+      "Solicitar dosagem de beta-HCG e progesterona"
+    ],
+    correctIndex: 0,
+    explanation: "Na pós-menopausa sem TRH, o EE máximo normal é 5 mm. EE > 4 mm com sangramento recorrente/persistente indica biópsia endometrial. Neste caso, com EE de 6 mm e sangramento, está indicada histeroscopia com biópsia."
+  },
+  {
+    question: "Qual é a causa mais comum de coagulopatia que se apresenta como SUA (aumento de fluxo desde a menarca)?",
+    options: [
+      "Doença de von Willebrand",
+      "Hemofilia A",
+      "Trombocitopenia imune",
+      "Leucemia mieloide crônica",
+      "Hepatite crônica com coagulopatia"
+    ],
+    correctIndex: 0,
+    explanation: "A doença de von Willebrand é a coagulopatia mais comum associada ao SUA. Caracteriza-se por aumento de fluxo desde a menarca, associado a epistaxe, gengivorragia e história de sangramento excessivo pós-trauma ou cirurgias."
+  },
+  {
+    question: "Qual dos seguintes achados é característico da adenomiose ao ultrassom transvaginal?",
+    options: [
+      "Interrupção da zona juncional, espessamento miometrial assimétrico e cistos miometriais",
+      "Imagem nodular bem delimitada com cápsula hiperecogênica no miométrio",
+      "Espessamento endometrial difuso com vascularização ao Doppler",
+      "Folículos subcorticais bilaterais com estroma central hiperecogênico",
+      "Coleção líquida intracavitária com debris"
+    ],
+    correctIndex: 0,
+    explanation: "A adenomiose ao USG TV apresenta: interrupção da zona juncional, espessamento miometrial assimétrico, cistos miometriais e zona juncional irregular. Difere do mioma por ser difusa e não capsulada. A RNM de pelve também contribui para o diagnóstico."
+  },
+  {
+    question: "Paciente em uso de anticoagulante oral para fibrilação atrial apresenta menorragia. Qual é a classificação do SUA segundo a FIGO?",
+    options: [
+      "SUA-I (Iatrogênica)",
+      "SUA-C (Coagulopatia)",
+      "SUA-O (disfunção Ovulatória)",
+      "SUA-E (desordem Endometrial)",
+      "SUA-N (Não classificada)"
+    ],
+    correctIndex: 0,
+    explanation: "SUA-I (Iatrogênica) inclui intervenções na coagulação ou na ovulação por: ACO, DIU, anticoagulantes, AAS, tamoxifeno e antidepressivos. O anticoagulante oral é a causa neste caso. SUA-C refere-se a coagulopatias primárias (hereditárias ou adquiridas), não medicamentosas."
+  },
+  {
+    question: "Qual é o tratamento de primeira escolha para a disfunção ovulatória (SUA-O)?",
+    options: [
+      "Uso cíclico de progestagênio isolado por 10–14 dias",
+      "ACO combinado de forma contínua sem pausa",
+      "Análogos de GnRH por 6 meses",
+      "Ablação endometrial por histeroscopia",
+      "Ácido tranexâmico durante o fluxo menstrual"
+    ],
+    correctIndex: 0,
+    explanation: "O tratamento da disfunção ovulatória (SUA-O) é o uso cíclico de progestagênio isolado por 10–14 dias do ciclo — que garante o estímulo progesterônico ausente e regulariza o ciclo. Os sangramentos anovulatórios ocorrem pela falta de oposição progesterônica ao estrogênio."
+  },
+  {
+    question: "Qual é a contraindicação para o uso de ácido tranexâmico no tratamento do SUA?",
+    options: [
+      "Trombose e insuficiência renal",
+      "Desejo de gestar",
+      "Uso concomitante de ACO combinado",
+      "Presença de mioma intramural",
+      "Hiperprolactinemia associada"
+    ],
+    correctIndex: 0,
+    explanation: "O ácido tranexâmico (antifibrinolítico) é contraindicado em trombose e insuficiência renal. É indicado para pacientes com desejo de gestar, contraindicação a hormônios ou risco aumentado de TVP. Posologia: 250 mg, 2–3 comprimidos, 3–4×/dia, por 3–4 dias."
+  },
+  {
+    question: "Qual anticoncepcional está contraindicado no tratamento do SUA com risco aumentado de TVP?",
+    options: [
+      "ACO combinado oral (estrogênio + progestágeno)",
+      "SIU liberador de levonorgestrel 52 mg",
+      "Desogestrel 75 μg contínuo",
+      "Acetato de medroxiprogesterona 150 mg IM",
+      "Ácido tranexâmico + ibuprofeno"
+    ],
+    correctIndex: 0,
+    explanation: "O ACO combinado oral contém estrogênio, que aumenta o risco tromboembólico (TVP). Em pacientes com risco aumentado de TVP, deve-se optar por tratamento não hormonal (AINEs, ácido tranexâmico) ou progestagênios isolados, que não têm este risco."
+  },
+  {
+    question: "Qual padrão de sangramento é caracterizado por ocorrer entre os ciclos menstruais e tem como causa frequente infecção ou pólipo?",
+    options: [
+      "Sangramento uterino intermenstrual",
+      "Sangramento uterino aumentado",
+      "Sangramento uterino irregular",
+      "Sangramento uterino não programado",
+      "Sangramento uterino agudo"
+    ],
+    correctIndex: 0,
+    explanation: "O sangramento intermenstrual ocorre entre os ciclos e tem como causas: infecções (cervicites, endometrites), pólipo cervical ou endometrial e neoplasia (endometrial, cervical, vulvar, vaginal)."
+  },
+  {
+    question: "A istmocele é classificada como qual tipo de causa de SUA na classificação PALM-COEIN?",
+    options: [
+      "SUA-N (Não classificada em outras partes)",
+      "SUA-P (Pólipo)",
+      "SUA-A (Adenomiose)",
+      "SUA-I (Iatrogênica)",
+      "SUA-E (Endometrial)"
+    ],
+    correctIndex: 0,
+    explanation: "A istmocele (defeito da cicatriz de cesariana) é classificada como SUA-N (Não classificada em outras partes), junto com malformações arteriovenosas, hipertrofia endometrial e alterações mullerianas."
+  },
+  {
+    question: "Em paciente pós-menopausa em uso de tamoxifeno que apresenta sangramento vaginal, qual é a conduta em relação à biópsia endometrial?",
+    options: [
+      "Biópsia sempre indicada, independente do eco endometrial (ponto de corte: 19,5 mm)",
+      "Biópsia apenas se EE > 5 mm, como nas demais pós-menopáusicas sem TRH",
+      "Biópsia apenas se EE > 8 mm, como nas pós-menopáusicas com TRH",
+      "Não há indicação de biópsia no tamoxifeno, apenas acompanhar",
+      "Biópsia somente se o sangramento for recorrente por mais de 3 meses"
+    ],
+    correctIndex: 0,
+    explanation: "O tamoxifeno é um SERM com ação estrogênica sobre o endométrio, aumentando o risco de hiperplasia e câncer endometrial. Em uso de tamoxifeno, a biópsia é indicada independente do valor do eco endometrial, com ponto de corte de 19,5 mm para a USG."
+  },
+  {
+    question: "Qual é a via preferencial de histerectomia para o tratamento do SUA quando tecnicamente viável?",
+    options: [
+      "Via laparoscópica ou vaginal",
+      "Via laparotômica (aberta) como padrão-ouro",
+      "Via histeroscópica exclusiva",
+      "Via transvaginal somente em nulíparas",
+      "Via robótica como primeira escolha"
+    ],
+    correctIndex: 0,
+    explanation: "A histerectomia pode ser realizada por via laparoscópica, vaginal ou laparotômica. As vias minimamente invasivas (laparoscópica e vaginal) são preferidas quando tecnicamente viáveis, com menor morbidade. As complicações incluem infecção de ferida, abscesso pélvico, fístulas e aderências."
+  },
+  {
+    question: "Qual dos seguintes progestagênios isolados NÃO é recomendado para tratamento do SUA?",
+    options: [
+      "Noretisterona 0,35 mg (minipílula) e implante subcutâneo de etonogestrel",
+      "SIU liberador de levonorgestrel 52 mg",
+      "Desogestrel 75 μg contínuo",
+      "Acetato de medroxiprogesterona 150 mg IM trimestral",
+      "Acetato de noretisterona 10 mg do 5º ao 26º dia"
+    ],
+    correctIndex: 0,
+    explanation: "Para tratamento do SUA com progestagênio isolado, NÃO devem ser utilizados a noretisterona 0,35 mg (minipílula) e o implante subcutâneo de etonogestrel, pois podem causar sangramento irregular imprevisível. Os progestagênios em doses adequadas são: AMP 150 mg IM, desogestrel 75 μg, SIU-LNG 52 mg, AMP 10 mg ou noretisterona 10 mg do 5º ao 26º dia."
+  },
+  {
+    question: "O sangramento uterino não programado em usuárias de ACO combinado é mais frequente em qual situação?",
+    options: [
+      "Primeiros meses de uso e ACO de baixa dose (etinilestradiol 20 μg) ou uso irregular",
+      "Mulheres acima de 40 anos independente da dose do ACO",
+      "Uso contínuo sem pausa por mais de 2 anos",
+      "Combinação com antibióticos de amplo espectro",
+      "Pacientes com índice de massa corporal elevado"
+    ],
+    correctIndex: 0,
+    explanation: "O sangramento não programado (escape) ocorre fora do período de pausa (privação hormonal) do ACO. É mais frequente nos primeiros meses de uso, com ACO de baixa dose (EE 20 μg) ou com uso irregular (esquecimento de comprimidos)."
+  },
+  {
+    question: "Paciente de 30 anos, sem desejo de gestar, com SUA por adenomiose refratária ao tratamento clínico. Qual é a conduta cirúrgica definitiva?",
+    options: [
+      "Histerectomia",
+      "Miomectomia laparoscópica",
+      "Ablação endometrial histeroscópica isolada",
+      "Embolização das artérias uterinas",
+      "Drilling ovariano por laparoscopia"
+    ],
+    correctIndex: 0,
+    explanation: "A adenomiose é difusa e não capsulada — não tem cápsula que permita ressecção isolada como o mioma. O tratamento definitivo é a histerectomia. A ablação endometrial pode ser considerada, mas tem menor eficácia na adenomiose profunda. A embolização é opção para preservar o útero."
+  },
+  {
+    question: "Quais exames laboratoriais são solicitados na investigação inicial do SUA, além do beta-HCG?",
+    options: [
+      "Hemograma, coagulograma, TSH/T4 livre e prolactina",
+      "Dosagem de testosterona total e livre, LH e FSH",
+      "Cultura de secreção vaginal e PCR para Chlamydia",
+      "Biopsia de endométrio e tomografia de abdome",
+      "Proteinograma, albumina e transaminases"
+    ],
+    correctIndex: 0,
+    explanation: "A investigação laboratorial do SUA inclui: hemograma (avaliação de anemia), coagulograma (rastreio de coagulopatias), TSH/T4 livre (hipo ou hipertireoidismo) e prolactina (hiperprolactinemia como causa de disfunção ovulatória). Além de USG TV e biópsia endometrial conforme indicações."
+  },
+  {
+    question: "Qual é a indicação do tratamento cirúrgico do SUA (quando indicar cirurgia)?",
+    options: [
+      "Prole constituída e/ou falha na abordagem conservadora clínica",
+      "Qualquer paciente com SUA crônico independente de resposta ao tratamento clínico",
+      "Apenas quando há instabilidade hemodinâmica no SUA agudo",
+      "Exclusivamente em pacientes com malignidade confirmada por biópsia",
+      "Sempre que o eco endometrial ultrapassa 10 mm ao USG TV"
+    ],
+    correctIndex: 0,
+    explanation: "O tratamento cirúrgico é indicado quando a prole está constituída e/ou há falha na abordagem conservadora. Inclui: polipectomia histeroscópica (pólipos), ablação endometrial, miomectomia ou histerectomia. A histerectomia é o tratamento definitivo quando não há desejo reprodutivo."
+  }
+];
+
+function shuffleQuestion(q) {
+  const correctText = q.options[q.correctIndex];
+  const shuffled = [...q.options];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return { ...q, options: shuffled, correctIndex: shuffled.indexOf(correctText) };
+}
+
+let questions = [];
+let current = 0;
+let correct = 0;
+let wrong = 0;
+
+function startQuiz() {
+  questions = rawQuestions.map(shuffleQuestion).sort(() => Math.random() - 0.5);
+  current = 0; correct = 0; wrong = 0;
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[current];
+  const total = questions.length;
+  document.getElementById('progress-label').textContent = `Questão ${current + 1} de ${total}`;
+  document.getElementById('progress-bar').style.width = `${((current) / total) * 100}%`;
+  document.getElementById('question-text').textContent = q.question;
+  document.getElementById('explanation').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+
+  const optDiv = document.getElementById('options');
+  optDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    optDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(selected) {
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  if (selected === q.correctIndex) {
+    btns[selected].classList.add('correct');
+    correct++;
+  } else {
+    btns[selected].classList.add('wrong');
+    btns[q.correctIndex].classList.add('correct');
+    wrong++;
+  }
+  const exp = document.getElementById('explanation');
+  exp.textContent = q.explanation;
+  exp.style.display = 'block';
+  document.getElementById('btn-next').style.display = 'inline-block';
+  document.getElementById('btn-next').textContent = current + 1 < questions.length ? 'Proxima →' : 'Ver resultado';
+}
+
+function nextQuestion() {
+  current++;
+  if (current < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const res = document.getElementById('result-screen');
+  res.style.display = 'block';
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+  document.getElementById('stat-total').textContent = questions.length;
+}
+
+function restartQuiz() {
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'block';
+}
+</script>
+</body>
+</html>
