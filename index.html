@@ -110,11 +110,11 @@ const rawQuestions = [
   {
     question: "Qual é a causa mais comum de sangramento uterino no menacme e deve ser sempre excluída primeiro?",
     options: [
-      "Gestação",
+      "Gestação (HCG positivo)",
       "Mioma uterino submucoso",
-      "Pólipo endometrial",
+      "Pólipo endometrial benigno",
       "Disfunção ovulatória por SOP",
-      "Coagulopatia por doença de von Willebrand"
+      "Coagulopatia (von Willebrand)"
     ],
     correctIndex: 0,
     explanation: "A causa mais comum de sangramento uterino no menacme é a gestação. O beta-HCG deve ser a primeira solicitação antes de investigar outras causas de SUA."
@@ -134,11 +134,11 @@ const rawQuestions = [
   {
     question: "A classificação PALM-COEIN da FIGO divide o SUA em causas estruturais (PALM) e não estruturais (COEIN). Qual item pertence ao grupo PALM?",
     options: [
-      "Adenomiose",
-      "Disfunção ovulatória",
-      "Coagulopatia",
-      "Iatrogênica",
-      "Desordem endometrial"
+      "Adenomiose — causa estrutural PALM",
+      "Disfunção ovulatória (O) — COEIN",
+      "Coagulopatia (C) — COEIN primária",
+      "Causa iatrogênica (I) — COEIN",
+      "Desordem endometrial (E) — COEIN"
     ],
     correctIndex: 0,
     explanation: "PALM corresponde às causas estruturais: Pólipo, Adenomiose, Leiomioma e Malignidade/hiperplasia. COEIN representa as causas não estruturais: Coagulopatia, disfunção Ovulatória, desordem Endometrial, Iatrogênica e Não classificada."
@@ -146,7 +146,7 @@ const rawQuestions = [
   {
     question: "Qual a diferença entre SUA crônico e SUA agudo segundo a classificação FIGO?",
     options: [
-      "Crônico: > 6 meses sem necessidade de intervenção imediata; Agudo: episódio intenso com necessidade de intervenção imediata",
+      "Crônico: > 6 meses sem intervenção urgente; Agudo: episódio intenso com intervenção imediata",
       "Crônico: associado a causas estruturais; Agudo: associado a causas não estruturais",
       "Crônico: sangramento cíclico regular; Agudo: sangramento irregular e imprevisível",
       "Crônico: tratado apenas clinicamente; Agudo: requer sempre cirurgia de urgência",
@@ -158,8 +158,8 @@ const rawQuestions = [
   {
     question: "Uma paciente de 52 anos, pós-menopausa há 3 anos, sem uso de terapia hormonal, apresenta episódio de sangramento vaginal. O eco endometrial ao USG TV é de 6 mm. Qual é a conduta?",
     options: [
-      "Indicar histeroscopia com biópsia endometrial, pois o EE ultrapassa o limite de 5 mm na pós-menopausa sem TRH",
-      "Tranquilizar a paciente, pois EE de 6 mm é normal em qualquer fase da vida",
+      "Histeroscopia com biópsia — EE supera 5 mm sem TRH",
+      "Tranquilizar — EE de 6 mm é normal em qualquer fase",
       "Apenas repetir a USG em 3 meses para acompanhar",
       "Iniciar terapia hormonal e reavaliar em 6 meses",
       "Solicitar dosagem de beta-HCG e progesterona"
@@ -170,11 +170,11 @@ const rawQuestions = [
   {
     question: "Qual é a causa mais comum de coagulopatia que se apresenta como SUA (aumento de fluxo desde a menarca)?",
     options: [
-      "Doença de von Willebrand",
-      "Hemofilia A",
-      "Trombocitopenia imune",
+      "Doença de von Willebrand (vWD)",
+      "Hemofilia A clássica severa",
+      "Trombocitopenia imune (PTI)",
       "Leucemia mieloide crônica",
-      "Hepatite crônica com coagulopatia"
+      "Hepatite crônica e coagulopatia"
     ],
     correctIndex: 0,
     explanation: "A doença de von Willebrand é a coagulopatia mais comum associada ao SUA. Caracteriza-se por aumento de fluxo desde a menarca, associado a epistaxe, gengivorragia e história de sangramento excessivo pós-trauma ou cirurgias."
@@ -182,10 +182,10 @@ const rawQuestions = [
   {
     question: "Qual dos seguintes achados é característico da adenomiose ao ultrassom transvaginal?",
     options: [
-      "Interrupção da zona juncional, espessamento miometrial assimétrico e cistos miometriais",
-      "Imagem nodular bem delimitada com cápsula hiperecogênica no miométrio",
-      "Espessamento endometrial difuso com vascularização ao Doppler",
-      "Folículos subcorticais bilaterais com estroma central hiperecogênico",
+      "Zona juncional interrompida e cistos miometriais",
+      "Nódulo delimitado com cápsula hiperecogênica",
+      "Espessamento endometrial difuso ao Doppler",
+      "Folículos subcorticais com estroma hiperecogênico",
       "Coleção líquida intracavitária com debris"
     ],
     correctIndex: 0,
@@ -194,11 +194,11 @@ const rawQuestions = [
   {
     question: "Paciente em uso de anticoagulante oral para fibrilação atrial apresenta menorragia. Qual é a classificação do SUA segundo a FIGO?",
     options: [
-      "SUA-I (Iatrogênica)",
-      "SUA-C (Coagulopatia)",
-      "SUA-O (disfunção Ovulatória)",
-      "SUA-E (desordem Endometrial)",
-      "SUA-N (Não classificada)"
+      "SUA-I (iatrogênica)",
+      "SUA-C (coagulopatia)",
+      "SUA-O (ovulatória)",
+      "SUA-E (endometrial)",
+      "SUA-N (sem classificação)"
     ],
     correctIndex: 0,
     explanation: "SUA-I (Iatrogênica) inclui intervenções na coagulação ou na ovulação por: ACO, DIU, anticoagulantes, AAS, tamoxifeno e antidepressivos. O anticoagulante oral é a causa neste caso. SUA-C refere-se a coagulopatias primárias (hereditárias ou adquiridas), não medicamentosas."
@@ -206,9 +206,9 @@ const rawQuestions = [
   {
     question: "Qual é o tratamento de primeira escolha para a disfunção ovulatória (SUA-O)?",
     options: [
-      "Uso cíclico de progestagênio isolado por 10–14 dias",
+      "Progestagênio isolado cíclico por 10–14 dias",
       "ACO combinado de forma contínua sem pausa",
-      "Análogos de GnRH por 6 meses",
+      "Análogos de GnRH por 6 meses seguidos",
       "Ablação endometrial por histeroscopia",
       "Ácido tranexâmico durante o fluxo menstrual"
     ],
@@ -219,7 +219,7 @@ const rawQuestions = [
     question: "Qual é a contraindicação para o uso de ácido tranexâmico no tratamento do SUA?",
     options: [
       "Trombose e insuficiência renal",
-      "Desejo de gestar",
+      "Desejo de gestar em curto prazo",
       "Uso concomitante de ACO combinado",
       "Presença de mioma intramural",
       "Hiperprolactinemia associada"
@@ -230,11 +230,11 @@ const rawQuestions = [
   {
     question: "Qual anticoncepcional está contraindicado no tratamento do SUA com risco aumentado de TVP?",
     options: [
-      "ACO combinado oral (estrogênio + progestágeno)",
-      "SIU liberador de levonorgestrel 52 mg",
-      "Desogestrel 75 μg contínuo",
+      "ACO combinado com estrogênio e progestina",
+      "SIU liberador de levonorgestrel (52 mg)",
+      "Desogestrel 75 μg oral de forma contínua",
       "Acetato de medroxiprogesterona 150 mg IM",
-      "Ácido tranexâmico + ibuprofeno"
+      "Ácido tranexâmico associado ao ibuprofeno"
     ],
     correctIndex: 0,
     explanation: "O ACO combinado oral contém estrogênio, que aumenta o risco tromboembólico (TVP). Em pacientes com risco aumentado de TVP, deve-se optar por tratamento não hormonal (AINEs, ácido tranexâmico) ou progestagênios isolados, que não têm este risco."
@@ -246,7 +246,7 @@ const rawQuestions = [
       "Sangramento uterino aumentado",
       "Sangramento uterino irregular",
       "Sangramento uterino não programado",
-      "Sangramento uterino agudo"
+      "Sangramento uterino agudo grave"
     ],
     correctIndex: 0,
     explanation: "O sangramento intermenstrual ocorre entre os ciclos e tem como causas: infecções (cervicites, endometrites), pólipo cervical ou endometrial e neoplasia (endometrial, cervical, vulvar, vaginal)."
@@ -254,11 +254,11 @@ const rawQuestions = [
   {
     question: "A istmocele é classificada como qual tipo de causa de SUA na classificação PALM-COEIN?",
     options: [
-      "SUA-N (Não classificada em outras partes)",
-      "SUA-P (Pólipo)",
-      "SUA-A (Adenomiose)",
-      "SUA-I (Iatrogênica)",
-      "SUA-E (Endometrial)"
+      "SUA-N (não classificada)",
+      "SUA-P (pólipo endometrial)",
+      "SUA-A (adenomiose uterina)",
+      "SUA-I (causa iatrogênica)",
+      "SUA-E (desordem endometrial)"
     ],
     correctIndex: 0,
     explanation: "A istmocele (defeito da cicatriz de cesariana) é classificada como SUA-N (Não classificada em outras partes), junto com malformações arteriovenosas, hipertrofia endometrial e alterações mullerianas."
@@ -266,7 +266,7 @@ const rawQuestions = [
   {
     question: "Em paciente pós-menopausa em uso de tamoxifeno que apresenta sangramento vaginal, qual é a conduta em relação à biópsia endometrial?",
     options: [
-      "Biópsia sempre indicada, independente do eco endometrial (ponto de corte: 19,5 mm)",
+      "Biópsia sempre indicada com tamoxifeno (corte: EE > 19,5 mm)",
       "Biópsia apenas se EE > 5 mm, como nas demais pós-menopáusicas sem TRH",
       "Biópsia apenas se EE > 8 mm, como nas pós-menopáusicas com TRH",
       "Não há indicação de biópsia no tamoxifeno, apenas acompanhar",
@@ -279,7 +279,7 @@ const rawQuestions = [
     question: "Qual é a via preferencial de histerectomia para o tratamento do SUA quando tecnicamente viável?",
     options: [
       "Via laparoscópica ou vaginal",
-      "Via laparotômica (aberta) como padrão-ouro",
+      "Via laparotômica como padrão-ouro",
       "Via histeroscópica exclusiva",
       "Via transvaginal somente em nulíparas",
       "Via robótica como primeira escolha"
@@ -290,11 +290,11 @@ const rawQuestions = [
   {
     question: "Qual dos seguintes progestagênios isolados NÃO é recomendado para tratamento do SUA?",
     options: [
-      "Noretisterona 0,35 mg (minipílula) e implante subcutâneo de etonogestrel",
+      "Minipílula 0,35 mg e implante de etonogestrel",
       "SIU liberador de levonorgestrel 52 mg",
-      "Desogestrel 75 μg contínuo",
-      "Acetato de medroxiprogesterona 150 mg IM trimestral",
-      "Acetato de noretisterona 10 mg do 5º ao 26º dia"
+      "Desogestrel 75 μg oral de forma contínua",
+      "Medroxiprogesterona 150 mg IM trimestral",
+      "Noretisterona 10 mg oral do 5º ao 26º dia"
     ],
     correctIndex: 0,
     explanation: "Para tratamento do SUA com progestagênio isolado, NÃO devem ser utilizados a noretisterona 0,35 mg (minipílula) e o implante subcutâneo de etonogestrel, pois podem causar sangramento irregular imprevisível. Os progestagênios em doses adequadas são: AMP 150 mg IM, desogestrel 75 μg, SIU-LNG 52 mg, AMP 10 mg ou noretisterona 10 mg do 5º ao 26º dia."
@@ -302,7 +302,7 @@ const rawQuestions = [
   {
     question: "O sangramento uterino não programado em usuárias de ACO combinado é mais frequente em qual situação?",
     options: [
-      "Primeiros meses de uso e ACO de baixa dose (etinilestradiol 20 μg) ou uso irregular",
+      "Primeiros meses e ACO de baixa dose (EE 20 μg)",
       "Mulheres acima de 40 anos independente da dose do ACO",
       "Uso contínuo sem pausa por mais de 2 anos",
       "Combinação com antibióticos de amplo espectro",
@@ -314,11 +314,11 @@ const rawQuestions = [
   {
     question: "Paciente de 30 anos, sem desejo de gestar, com SUA por adenomiose refratária ao tratamento clínico. Qual é a conduta cirúrgica definitiva?",
     options: [
-      "Histerectomia",
+      "Histerectomia definitiva",
       "Miomectomia laparoscópica",
-      "Ablação endometrial histeroscópica isolada",
-      "Embolização das artérias uterinas",
-      "Drilling ovariano por laparoscopia"
+      "Ablação endometrial isolada",
+      "Embolização uterina (EAU)",
+      "Drilling ovariano laparoscópico"
     ],
     correctIndex: 0,
     explanation: "A adenomiose é difusa e não capsulada — não tem cápsula que permita ressecção isolada como o mioma. O tratamento definitivo é a histerectomia. A ablação endometrial pode ser considerada, mas tem menor eficácia na adenomiose profunda. A embolização é opção para preservar o útero."
@@ -326,7 +326,7 @@ const rawQuestions = [
   {
     question: "Quais exames laboratoriais são solicitados na investigação inicial do SUA, além do beta-HCG?",
     options: [
-      "Hemograma, coagulograma, TSH/T4 livre e prolactina",
+      "Hemograma, coagulograma, TSH/T4 e prolactina",
       "Dosagem de testosterona total e livre, LH e FSH",
       "Cultura de secreção vaginal e PCR para Chlamydia",
       "Biopsia de endométrio e tomografia de abdome",
@@ -339,7 +339,7 @@ const rawQuestions = [
     question: "Qual é a indicação do tratamento cirúrgico do SUA (quando indicar cirurgia)?",
     options: [
       "Prole constituída e/ou falha na abordagem conservadora clínica",
-      "Qualquer paciente com SUA crônico independente de resposta ao tratamento clínico",
+      "Qualquer paciente com SUA crônico sem resposta ao tratamento",
       "Apenas quando há instabilidade hemodinâmica no SUA agudo",
       "Exclusivamente em pacientes com malignidade confirmada por biópsia",
       "Sempre que o eco endometrial ultrapassa 10 mm ao USG TV"
